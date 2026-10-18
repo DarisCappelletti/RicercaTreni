@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="RicercaTreni.Tests/RicercaTreni.Tests.csproj" />
+  <Project Path="RicercaTreni/RicercaTreni.csproj" />
+</Solution>
