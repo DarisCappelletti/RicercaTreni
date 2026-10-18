@@ -4,18 +4,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Ricerca Treni</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,200..900&display=swap" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
     <header>
-        <nav class="navbar narice">
+        <nav class="navbar navbar-expand-sm bg-white border-bottom mb-3">
             <div class="container">
-                <a class="narice-marchio" asp-area="" asp-page="/Index">Ricerca Treni</a>
-                <div class="narice-voci">
+                <a class="navbar-brand fw-bold d-flex align-items-center gap-2" asp-area="" asp-page="/Index">Ricerca Treni</a>
+                <div class="d-flex gap-3">
                     <a class="nav-link" asp-area="" asp-page="/Index">Cerca</a>
                     <a class="nav-link" asp-area="" asp-page="/Privacy">Privacy</a>
                 </div>
@@ -23,17 +20,17 @@
         </nav>
     </header>
 
-    <main>
+    <main class="pb-5">
         @RenderBody()
     </main>
 
-    <footer class="footer">
-        <div class="container footer-interno">
+    <footer class="border-top py-3 bg-white">
+        <div class="container d-flex justify-content-between flex-wrap gap-2">
             <span>&copy; 2026 Ricerca Treni di Daris Cappelletti</span>
             <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
         <div class="container">
-            <small>Progetto didattico sulle API non ufficiali di lefrecce: non è collegato al servizio ufficiale di Trenitalia.</small>
+            <small class="text-secondary">Progetto didattico sulle API non ufficiali di lefrecce: non è collegato al servizio ufficiale di Trenitalia.</small>
         </div>
     </footer>
 

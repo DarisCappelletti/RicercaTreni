@@ -1,578 +1,81 @@
-/* ------------------------------------------------------------------
-   Ricerca Treni — tavolozza e tipo
-   Soggetto: il tabellone delle partenze e la segnaletica ferroviaria.
-   ------------------------------------------------------------------ */
+/* Ricerca Treni: grafica essenziale su Bootstrap. Qui solo pochi ritocchi. */
+
 :root {
-    --freccia: #C8102E;          /* rosso treno: CTA, orari in evidenza */
+    --freccia: #C8102E;      /* il rosso della segnaletica, solo per il tasto e i punti chiave */
     --freccia-scuro: #99001D;
-    --carbone: #1C2430;          /* testo principale */
-    --carbone-2: #4A5560;        /* testo secondario */
-    --cartellino: #EDF0F3;       /* fondo pagina */
-    --lisciante: #FFFFFF;        /* pannelli */
-    --linea: #D8DCE1;            /* bordi */
-    --passaggio: #177245;        /* disponibilità, conferme */
-    --tabellone: #101820;        /* banda del tabellone */
-    --tabellone-testo: #F2F5F7;
-    --tabellone-spento: #7C8A96;
-    font-size: 16px;
 }
 
 body {
-    background: var(--cartellino);
-    color: var(--carbone);
-    font-family: "Archivo", "Segoe UI", system-ui, sans-serif;
-    margin-bottom: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+    background-color: #F8F9FA;
 }
 
-main { flex: 1; }
-
-a { color: var(--freccia); }
-a:hover { color: var(--freccia-scuro); }
-
-/* Foco visibile, sempre */
-:focus-visible {
-    outline: 3px solid var(--freccia);
-    outline-offset: 2px;
-    border-radius: 2px;
+/* Il form di ricerca è il centro della pagina */
+.card-ricerca {
+    max-width: 62rem;
+    margin-inline: auto;
 }
 
-/* ---------------------------------------------------------------
-   Narice (navigazione): sottile, niente carte
-   --------------------------------------------------------------- */
-.narice {
-    background: var(--lisciante);
-    border-bottom: 1px solid var(--linea);
-    display: block;
-    padding: .55rem 0;
-}
-
-.narice-marchio {
-    font-weight: 800;
-    font-variation-settings: "wdth" 110;
-    letter-spacing: -.01em;
-    color: var(--carbone);
-    font-size: 1.05rem;
-    display: inline-flex;
-    align-items: center;
-    gap: .55rem;
-}
-
-/* Il marchio porta la paletta dei binari: due tagli rossi, come il segnale */
-.narice-marchio::before {
-    content: "";
-    width: .55rem;
-    height: .95rem;
-    border-radius: 2px;
-    background:
-        linear-gradient(to bottom,
-            transparent 0 18%, var(--freccia) 18% 46%,
-            transparent 46% 58%, var(--freccia) 58% 82%,
-            transparent 82%);
-}
-
-.narice-voci { display: flex; gap: 1.25rem; }
-
-.narice-voci .nav-link {
-    color: var(--carbone-2);
-    font-weight: 500;
-    padding: 0;
-}
-.narice-voci .nav-link:hover { color: var(--carbone); }
-
-/* ---------------------------------------------------------------
-   Tabellone: la banda hero, indicatore della tratta
-   --------------------------------------------------------------- */
-.tabellone {
-    background: var(--tabellone);
-    color: var(--tabellone-testo);
-    padding: 1.35rem 0 4.4rem;
-}
-
-.tabellone-sopra {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    color: var(--tabellone-spento);
-    font-size: .85rem;
-    font-weight: 600;
-    margin-bottom: .4rem;
-}
-
-.tabellone-tratta {
-    display: flex;
-    align-items: stretch;
-    gap: 1rem;
-    flex-wrap: wrap;
-    font-weight: 800;
-    font-variation-settings: "wdth" 122;
-    font-size: clamp(1.5rem, 4.5vw, 2.5rem);
-    line-height: 1.06;
-    letter-spacing: .01em;
-    text-transform: uppercase;
-}
-
-.tabellone-capo {
-    display: inline-flex;
-    flex-direction: column;
-    min-width: 30%;
-}
-
-.tabellone-ruolo {
-    font-size: .78rem;
-    font-weight: 600;
-    color: var(--tabellone-spento);
-    letter-spacing: 0;
-    text-transform: none;
-    margin-bottom: .15rem;
-}
-
-/* la regola tra i due capi indica il verso del viaggio */
-.tabellone-verso {
-    align-self: stretch;
-    width: 4px;
-    min-height: 2.6em;
-    border-radius: 2px;
-    background: var(--freccia);
-}
-
-/* la lampada del tabellone: si accende una sola volta, al primo avvio */
-@media (prefers-reduced-motion: no-preference) {
-    @keyframes luce {
-        from { opacity: .25; }
-        to   { opacity: 1; }
-    }
-    .tabellone-tratta, .tabellone-tratta > * {
-        animation: luce .5s ease-out both;
-    }
-    .tabellone-verso { animation-delay: .15s; }
-}
-
-/* ---------------------------------------------------------------
-   Sportello: il form che sta mezza sopra la banda
-   --------------------------------------------------------------- */
-.container-treno { max-width: 62rem; }
-
-.sportello {
-    background: var(--lisciante);
-    border: 1px solid var(--linea);
-    border-radius: 10px;
-    padding: 1.4rem;
-    margin-top: -3.2rem;
-    position: relative;
-    box-shadow: 0 14px 30px rgba(16, 24, 32, .18);
-}
-
-.griglia-sportello {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: .9rem 1.1rem;
-}
-
-@media (max-width: 767.98px) {
-    .griglia-sportello { grid-template-columns: 1fr; }
-    .sportello { padding: 1.1rem; }
-}
-
-.campo { position: relative; }
-
-.campo-etichetta {
-    display: block;
-    font-weight: 600;
-    font-size: .95rem;
-    margin-bottom: .3rem;
-    color: var(--carbone);
-}
-
-.campo-obbligo { color: var(--freccia); }
-
-.form-control, .form-select {
-    border: 1.5px solid var(--linea);
-    border-radius: 7px;
-    padding: .55rem .75rem;
-    color: var(--carbone);
-    background-color: var(--lisciante);
-    font-size: 1rem;
-}
-.form-control:focus, .form-select:focus {
-    border-color: var(--freccia);
-    box-shadow: none;
-}
-
-/* Le due stazioni: la trattino del viaggio sta tra i campi, il tasto scambia */
-.coppia-stazioni {
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.1rem;
-    position: relative;
-}
-
-@media (max-width: 767.98px) {
-    .coppia-stazioni { gap: 2.4rem; }
-}
-
-.bordo-interno {
-    border: none;
-    background: none;
-    padding: 0;
-}
-
-/* Scambia: pallone rosso con le due direzioni, al centro tra le stazioni */
-.tasto-scambia {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -58%);
-    width: 2.2rem;
-    height: 2.2rem;
-    border-radius: 50%;
-    border: 1.5px solid var(--linea);
-    background: var(--lisciante);
-    color: var(--freccia);
-    font-size: 1rem;
-    line-height: 1;
-    display: grid;
-    place-items: center;
-    cursor: pointer;
-    transition: transform .15s ease, background .15s ease;
-}
-.tasto-scambia:hover {
-    background: var(--freccia);
-    color: var(--lisciante);
-    border-color: var(--freccia);
-    transform: translate(-50%, -58%) rotate(180deg);
-}
-
-/* Chip data rapida e filtri: toggles, la struttura dice cos'è attivo */
-.riga-aggiunte {
-    grid-column: 1 / -1;
-    display: flex;
-    flex-wrap: wrap;
-    gap: .45rem;
-    align-items: center;
-    margin-top: -.15rem;
-}
-
-.chip {
-    display: inline-flex;
-    align-items: center;
-    gap: .4rem;
-    border: 1.5px solid var(--linea);
-    border-radius: 999px;
-    padding: .32rem .8rem;
-    font-size: .92rem;
-    font-weight: 600;
-    color: var(--carbone-2);
-    cursor: pointer;
-    user-select: none;
-    background: var(--lisciante);
-    transition: color .12s ease, border-color .12s ease, background .12s ease;
-}
-.chip:hover { color: var(--carbone); border-color: var(--carbone-2); }
-.chip input { position: absolute; opacity: 0; pointer-events: none; }
-.chip:has(input:checked) {
-    background: var(--carbone);
-    border-color: var(--carbone);
-    color: var(--lisciante);
-}
-.chip:focus-within { outline: 3px solid var(--freccia); outline-offset: 2px; }
-
-/* Solo nel chip del prezzo il campo deve restare visibile */
-.chip-prezzo input {
-    position: static;
-    opacity: 1;
-    pointer-events: auto;
-    width: 4.6rem;
-    border: 1px solid var(--linea);
-    border-radius: 6px;
-    padding: .2rem .45rem;
-    font-weight: 600;
-    font-size: .92rem;
+/* Orari della tabella risultati: grandi e con cifre allineate */
+.ora-grande {
+    font-weight: 700;
+    font-size: 1.25rem;
+    line-height: 1.1;
     font-variant-numeric: tabular-nums;
 }
 
-/* ---------------------------------------------------------------
-   Il tasto grande: cerca
-   --------------------------------------------------------------- */
-.tasto-cerca {
-    grid-column: 1 / -1;
-    background: var(--freccia);
-    border: none;
-    border-radius: 8px;
-    color: var(--lisciante);
-    font-weight: 700;
-    font-variation-settings: "wdth" 110;
-    letter-spacing: .01em;
-    font-size: 1.08rem;
-    padding: .7rem 1.3rem;
-    transition: background .15s ease;
+.ora-luogo {
+    color: #6c757d;
+    font-size: .85rem;
 }
-.tasto-cerca:hover { background: var(--freccia-scuro); color: var(--lisciante); }
-.tasto-cerca[disabled] { background: var(--carbone-2); }
 
-.tasto-cerca .cercando {
+/* Prezzo in colonna: allineato e leggibile */
+.prezzo-grande {
+    font-weight: 700;
+    font-size: 1.15rem;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+/* Il tasto della ricerca in rosso segnaletica */
+.btn-freccia {
+    background-color: var(--freccia);
+    border-color: var(--freccia);
+    color: #fff;
+}
+.btn-freccia:hover,
+.btn-freccia:focus {
+    background-color: var(--freccia-scuro);
+    border-color: var(--freccia-scuro);
+    color: #fff;
+}
+
+/* Scambio stazioni: piccolo, tra i due campi */
+.btn-scambia {
+    line-height: 1;
+    padding: .45rem .7rem;
+}
+
+/* Spinner nel tasto mentre cerca */
+.cercando {
     display: none;
     width: 1.1rem;
     height: 1.1rem;
-    margin-right: .55rem;
-    border: 2px solid rgba(255,255,255,.4);
+    margin-right: .5rem;
+    vertical-align: -.25rem;
+    border: 2px solid rgba(255, 255, 255, .4);
     border-top-color: #fff;
     border-radius: 50%;
     animation: gira .8s linear infinite;
-    vertical-align: -.2rem;
 }
-.tasto-cerca.cercando-on .cercando { display: inline-block; }
+.cercando-on .cercando { display: inline-block; }
+
 @keyframes gira { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) {
-    .tasto-cerca .cercando { animation-duration: 1.6s; }
-    .tasto-scambia { transition: none; }
+    .cercando { animation-duration: 1.6s; }
 }
-
-/* ---------------------------------------------------------------
-   Esito: riepilogo e tabellone dei risultati
-   --------------------------------------------------------------- */
-.esito-titolo {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: .5rem;
-    margin: 1.9rem 0 .8rem;
-}
-
-.esito-numero {
-    font-weight: 800;
-    font-variation-settings: "wdth" 115;
-    font-size: 1.3rem;
-}
-
-.esito-nota { color: var(--carbone-2); font-size: .92rem; }
-
-.avviso {
-    background: var(--lisciante);
-    border: 1px solid var(--linea);
-    border-left: 4px solid var(--freccia);
-    border-radius: 7px;
-    padding: .8rem 1rem;
-    margin-top: 1.9rem;
-    color: var(--carbone);
-}
-
-.avviso-fermo {
-    border-left-color: var(--carbone-2);
-    color: var(--carbone-2);
-}
-
-/* Una riga del tabellone: ora grande a sinistra, prezzo a destra */
-.elenco-treni { margin-top: .4rem; }
-
-.treno {
-    background: var(--lisciante);
-    border: 1px solid var(--linea);
-    border-radius: 10px;
-    padding: .95rem 1.15rem;
-    margin-bottom: .7rem;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: .3rem .8rem;
-    align-items: center;
-}
-
-.treno-viaggio {
-    display: flex;
-    align-items: center;
-    gap: .9rem;
-    min-width: 0;
-}
-
-.momento { min-width: 5.4rem; }
-
-.momento-ora {
-    display: block;
-    font-weight: 800;
-    font-variation-settings: "wdth" 118;
-    font-size: 1.45rem;
-    line-height: 1;
-    font-variant-numeric: tabular-nums;
-}
-.momento-ora.momento-via { color: var(--freccia); }
-
-.momento-luogo {
-    display: block;
-    font-size: .88rem;
-    color: var(--carbone-2);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.momento-giorno { font-variant-numeric: tabular-nums; }
-
-/* linea orizzontale del viaggio con la durata scritta sopra */
-.via {
-    flex: 1;
-    min-width: 3.5rem;
-    text-align: center;
-    color: var(--carbone-2);
-    font-size: .85rem;
-    font-weight: 600;
-}
-.via::before {
-    content: "";
-    display: block;
-    height: 2px;
-    border-radius: 1px;
-    background: var(--linea);
-    margin-bottom: .3rem;
-}
-.via span { display: inline; }
-
-.formazione {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .35rem .55rem;
-    margin-top: .45rem;
-}
-
-.formazione-categoria {
-    font-size: .78rem;
-    font-weight: 700;
-    color: var(--carbone-2);
-    border: 1px solid var(--linea);
-    border-radius: 999px;
-    padding: .1rem .55rem;
-    font-variant-numeric: tabular-nums;
-}
-
-.treno-acquisto {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: .4rem;
-}
-
-.prezzo {
-    font-weight: 800;
-    font-variation-settings: "wdth" 115;
-    font-size: 1.45rem;
-    font-variant-numeric: tabular-nums;
-    line-height: 1;
-    white-space: nowrap;
-}
-.prezzo-prezzo-indicativo { font-size: .76rem; color: var(--passaggio); }
-
-.badge-super {
-    background: var(--passaggio);
-    color: #fff;
-    font-size: .76rem;
-    font-weight: 700;
-    border-radius: 999px;
-    padding: .14rem .6rem;
-    white-space: nowrap;
-}
-
-.tasto-dettagli {
-    background: none;
-    border: none;
-    color: var(--freccia);
-    font-weight: 700;
-    font-size: .95rem;
-    padding: 0 0.2rem;
-    cursor: pointer;
-}
-.tasto-dettagli:hover { color: var(--freccia-scuro); }
-
-@media (max-width: 575.98px) {
-    .treno { grid-template-columns: 1fr; }
-    .treno-acquisto {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        border-top: 1px solid var(--linea);
-        padding-top: .7rem;
-    }
-    .momento { min-width: 4.6rem; }
-    .momento-ora { font-size: 1.3rem; }
-}
-
-/* ---------------------------------------------------------------
-   Dettagli (finestra modale)
-   --------------------------------------------------------------- */
-.modale-titolo {
-    font-weight: 800;
-    font-variation-settings: "wdth" 112;
-}
-
-.modale-sezione {
-    font-weight: 700;
-    font-size: .92rem;
-    color: var(--carbone-2);
-    border-bottom: 2px solid var(--linea);
-    padding-bottom: .25rem;
-    margin: 1.1rem 0 .55rem;
-}
-
-.tabella-dettagli {
-    font-size: .93rem;
-    margin-bottom: 0;
-}
-.tabella-dettagli th {
-    color: var(--carbone-2);
-    font-weight: 600;
-    font-size: .82rem;
-}
-.tabella-dettagli td, .tabella-dettagli th {
-    padding: .4rem .5rem;
-}
-.tabella-dettagli .cella-ora {
-    font-variant-numeric: tabular-nums;
-    white-space: nowrap;
-}
-.tabella-dettagli .offerta-vendita { color: var(--carbone-2); }
-
-/* ---------------------------------------------------------------
-   Pieghevole: cosa puoi cercare
-   --------------------------------------------------------------- */
-.pieghevole {
-    margin-top: .55rem;
-    font-size: .9rem;
-    color: var(--carbone-2);
-}
-.pieghevole summary {
-    cursor: pointer;
-    font-weight: 600;
-    color: var(--carbone);
-}
-.pieghevole ul { margin: .4rem 0 0; }
-
-/* ---------------------------------------------------------------
-   Footer
-   --------------------------------------------------------------- */
-.footer {
-    border-top: 1px solid var(--linea);
-    background: var(--lisciante);
-    margin-top: 3.5rem;
-    padding: 1.1rem 0;
-    color: var(--carbone-2);
-}
-.footer-interno {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: .5rem;
-    margin-bottom: .25rem;
-}
-.footer a { color: var(--carbone-2); }
-.footer a:hover { color: var(--carbone); }
-.footer small { color: var(--carbone-2); }
 
 /* Le pagine semplici (privacy, errore) */
-.pagina-semplice { padding: 2.5rem 0; max-width: 46em; }
-.pagina-semplice h1 {
-    font-weight: 800;
-    font-variation-settings: "wdth" 112;
-    margin-bottom: 1rem;
+.pagina-semplice {
+    max-width: 46em;
+    margin-inline: auto;
 }

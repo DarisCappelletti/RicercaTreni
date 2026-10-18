@@ -7,7 +7,7 @@
     // -----------------------------------------------------------
     // Scambia le due stazioni
     // -----------------------------------------------------------
-    var tastoScambia = document.querySelector('.tasto-scambia');
+    var tastoScambia = document.querySelector('.btn-scambia');
     if (tastoScambia) {
         tastoScambia.addEventListener('click', function () {
             var partenza = document.getElementById('Form_StazionePartenza');
@@ -84,7 +84,7 @@
     // -----------------------------------------------------------
     document.querySelectorAll('form[data-cerca]').forEach(function (modulo) {
         modulo.addEventListener('submit', function () {
-            var tasto = modulo.querySelector('.tasto-cerca');
+            var tasto = modulo.querySelector('.btn-freccia');
             if (!tasto) return;
             tasto.disabled = true;
             tasto.classList.add('cercando-on');
