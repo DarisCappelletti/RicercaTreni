@@ -4,33 +4,36 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Ricerca Treni</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm bg-white border-bottom mb-3">
-            <div class="container">
-                <a class="navbar-brand fw-bold d-flex align-items-center gap-2" asp-area="" asp-page="/Index">Ricerca Treni</a>
-                <div class="d-flex gap-3">
-                    <a class="nav-link navbar-voce" asp-area="" asp-page="/Index">Cerca</a>
-                    <a class="nav-link navbar-voce" asp-area="" asp-page="/Privacy">Privacy</a>
+        <nav class="narice">
+            <div class="pagina narice-interna">
+                <a class="marchio" asp-area="" asp-page="/Index">Ricerca Treni</a>
+                <div class="voci-narice">
+                    <a class="voce-narice" asp-area="" asp-page="/Index">Cerca</a>
+                    <a class="voce-narice" asp-area="" asp-page="/Privacy">Privacy</a>
                 </div>
             </div>
         </nav>
     </header>
 
-    <main class="pb-5">
+    <main class="pb-1">
         @RenderBody()
     </main>
 
-    <footer class="border-top py-3 bg-white">
-        <div class="container d-flex justify-content-between flex-wrap gap-2">
+    <footer class="piede">
+        <div class="pagina d-flex justify-content-between flex-wrap gap-2">
             <span>&copy; 2026 Ricerca Treni di Daris Cappelletti</span>
-            <a asp-area="" asp-page="/Privacy" class="navbar-voce">Privacy</a>
+            <a asp-area="" asp-page="/Privacy" class="voce-narice">Privacy</a>
         </div>
-        <div class="container">
-            <small class="text-secondary">Progetto didattico sulle API non ufficiali di lefrecce: non è collegato al servizio ufficiale di Trenitalia.</small>
+        <div class="pagina">
+            <small>Progetto didattico sulle API non ufficiali di lefrecce: non è collegato al servizio ufficiale di Trenitalia.</small>
         </div>
     </footer>
 

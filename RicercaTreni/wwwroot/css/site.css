@@ -1,87 +1,312 @@
-/* Ricerca Treni: grafica essenziale su Bootstrap. Qui solo pochi ritocchi. */
+/* Ricerca Treni — lingua visiva: la biglietteria pulita.
+   Il rosso è la segnaletica: appare solo su azioni e dati chiave.
+   Tutto il resto resta quieto: carta bianca su grigio, bordi sottili,
+   cifre tabulari per orari e prezzi come sul tabellone. */
 
 :root {
-    --freccia: #C8102E;      /* il rosso della segnaletica, solo per il tasto e i punti chiave */
+    --freccia: #C8102E;          /* CTA, prezzo, fuoco, dettagli attivi */
     --freccia-scuro: #99001D;
+    --freccia-tenue: #FBEDEF;    /* fondo delle pastiglie attive */
+    --inchiostro: #182028;       /* testo principale */
+    --inchiostro-2: #5C6670;     /* testo secondario */
+    --linea: #E3E7EB;            /* bordi e righe */
+    --carta: #FFFFFF;            /* pannelli */
+    --cartellino: #F5F6F8;       /* fondo pagina */
+    --passaggio: #177245;        /* Solo il badge Super Economy */
+    font-size: 16px;
 }
 
 body {
-    background-color: #F8F9FA;
+    background: var(--cartellino);
+    color: var(--inchiostro);
+    font-family: "Archivo", "Segoe UI", system-ui, sans-serif;
 }
 
-/* Marchio e voci di navigazione: grigio scuro, niente blu di default */
-.navbar-brand,
-.navbar-voce {
-    color: #1C2430;
-    text-decoration: none;
+:focus-visible {
+    outline: 3px solid var(--freccia);
+    outline-offset: 2px;
+    border-radius: 4px;
 }
-.navbar-voce:hover { color: #6c757d; }
-a.navbar-brand:hover { color: #1C2430; }
 
-/* Il form di ricerca è il centro della pagina */
-.card-ricerca {
+/* Contenitore unico: tutta la pagina sta sulla stessa colonna */
+.pagina {
     max-width: 62rem;
     margin-inline: auto;
+    padding-inline: 1.25rem;
 }
 
-/* Orari della tabella risultati: grandi e con cifre allineate */
-.ora-grande {
-    font-weight: 700;
-    font-size: 1.25rem;
-    line-height: 1.1;
-    font-variant-numeric: tabular-nums;
+/* ---------------------------------------------------------------
+   Narice: sottile, bianca, il marchio porta i tagli del segnale
+   --------------------------------------------------------------- */
+.narice {
+    background: var(--carta);
+    border-bottom: 1px solid var(--linea);
 }
 
-.ora-luogo {
-    color: #6c757d;
-    font-size: .85rem;
+.narice-interna {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding-block: .7rem;
+    flex-wrap: wrap;
 }
 
-/* Prezzo in colonna: allineato e leggibile */
-.prezzo-grande {
-    font-weight: 700;
-    font-size: 1.15rem;
-    font-variant-numeric: tabular-nums;
-    white-space: nowrap;
-}
-
-/* Il tasto della ricerca in rosso segnaletica */
-.btn-freccia {
-    background-color: var(--freccia);
-    border-color: var(--freccia);
-    color: #fff;
-}
-.btn-freccia:hover,
-.btn-freccia:focus {
-    background-color: var(--freccia-scuro);
-    border-color: var(--freccia-scuro);
-    color: #fff;
-}
-
-/* Scambio stazioni: tondo, piccolo, tra i due campi */
-.btn-scambia {
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 50%;
-    padding: 0;
-    line-height: 1;
+.marchio {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+    font-weight: 800;
     font-size: 1.05rem;
+    letter-spacing: -.01em;
+    color: var(--inchiostro);
+    text-decoration: none;
 }
 
-/* Bottoni data rapida: ghost, piccoli ma leggibili come azioni */
-.btn-data-rapida {
-    font-size: .82rem;
-    padding: .1rem .6rem;
-    border-radius: 999px;
+/* due tagli rossi, come la paletta del capostazione */
+.marchio::before {
+    content: "";
+    width: .5rem;
+    height: .95rem;
+    border-radius: 2px;
+    background:
+        linear-gradient(to bottom,
+            transparent 0 18%, var(--freccia) 18% 46%,
+            transparent 46% 58%, var(--freccia) 58% 82%,
+            transparent 82%);
 }
+
+.voci-narice { display: flex; gap: 1.25rem; }
+
+.voce-narice {
+    color: var(--inchiostro-2);
+    font-weight: 500;
+    text-decoration: none;
+}
+.voce-narice:hover { color: var(--inchiostro); }
+
+/* ---------------------------------------------------------------
+   Introduzione: un titolo quieta, poi subito il form
+   --------------------------------------------------------------- */
+.introduzione { margin: 2.2rem 0 1.3rem; }
+
+.introduzione h1 {
+    font-weight: 800;
+    font-size: 1.65rem;
+    letter-spacing: -.01em;
+    margin-bottom: .35rem;
+}
+
+.introduzione p {
+    color: var(--inchiostro-2);
+    font-size: .98rem;
+    max-width: 44em;
+    margin-bottom: 0;
+}
+
+/* ---------------------------------------------------------------
+   Sportello: la carta di ricerca, l'unico pannello con ombra
+   --------------------------------------------------------------- */
+.carta-ricerca {
+    background: var(--carta);
+    border: 1px solid var(--linea);
+    border-radius: 16px;
+    padding: 1.6rem 1.6rem 1.7rem;
+    box-shadow: 0 1px 2px rgba(16, 24, 32, .05), 0 10px 30px rgba(16, 24, 32, .07);
+}
+
+@media (max-width: 575.98px) {
+    .carta-ricerca { padding: 1.15rem 1rem 1.3rem; border-radius: 12px; }
+}
+
+/* Campi */
+.etichetta {
+    display: block;
+    font-size: .82rem;
+    font-weight: 600;
+    color: var(--inchiostro-2);
+    margin-bottom: .3rem;
+}
+
+.campo {
+    display: block;
+    width: 100%;
+    border: 1px solid var(--linea);
+    border-radius: 10px;
+    background: var(--carta);
+    padding: .6em .8em;
+    font-size: 1rem;
+    color: var(--inchiostro);
+    font-family: inherit;
+    font-variant-numeric: tabular-nums;
+}
+
+.campo:focus {
+    outline: none;
+    border-color: var(--freccia);
+    box-shadow: 0 0 0 3px rgba(200, 16, 46, .1);
+}
+
+/* La tratta: il filo tratteggiato che collega le due stazioni */
+.riga-stazioni {
+    display: grid;
+    grid-template-columns: 1fr 3.4rem 1fr;
+    gap: 0 1.1rem;
+}
+
+.tratta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* solo il tratto sotto lo scambia: indica il verso del viaggio */
+.tratta::after {
+    content: "";
+    width: 0;
+    height: 1.1rem;
+    border-left: 2px dashed var(--freccia);
+}
+
+.btn-scambia {
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 50%;
+    border: 1px solid var(--linea);
+    background: var(--carta);
+    color: var(--inchiostro);
+    font-family: inherit;
+    font-size: 1.05rem;
+    line-height: 1;
+    display: grid;
+    place-items: center;
+    margin-top: 1.2rem; /* porta il cerchio in linea con i campi */
+    cursor: pointer;
+    transition: border-color .15s ease, color .15s ease, transform .2s ease;
+}
+.btn-scambia:hover {
+    border-color: var(--freccia);
+    color: var(--freccia);
+    transform: rotate(180deg);
+}
+
+@media (max-width: 767.98px) {
+    .riga-stazioni { grid-template-columns: 1fr; row-gap: .9rem; }
+    .tratta {
+        flex-direction: row;
+        min-height: 2.4rem;
+        padding-inline: 1.6rem;
+    }
+    .tratta::after { width: 1.6rem; height: 0; border-left: 0; border-top: 2px dashed var(--freccia); align-self: center; }
+    .btn-scambia { margin-top: 0; }
+}
+
+.chipdata {
+    font-family: inherit;
+    font-size: .78rem;
+    font-weight: 600;
+    padding: .16rem .7rem;
+    border-radius: 999px;
+    border: 1px solid var(--linea);
+    background: var(--carta);
+    color: var(--inchiostro-2);
+    cursor: pointer;
+    transition: border-color .15s ease, color .15s ease;
+}
+.chipdata:hover { border-color: var(--freccia); color: var(--freccia); }
+
+/* Filtri come pastiglie: la scelta attiva prende il rosso tenue */
+.filtri { margin-top: 1.35rem; }
+
+.gruppo-pastiglie {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    align-items: center;
+}
+
+.pastiglia { position: relative; }
+
+.pastiglia input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.pastiglia-testo {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    padding: .42rem .85rem;
+    border-radius: 999px;
+    border: 1px solid var(--linea);
+    background: var(--carta);
+    font-size: .88rem;
+    font-weight: 500;
+    color: var(--inchiostro);
+    cursor: pointer;
+    user-select: none;
+}
+
+.pastiglia input:checked + .pastiglia-testo {
+    background: var(--freccia-tenue);
+    border-color: var(--freccia);
+    color: var(--freccia-scuro);
+    font-weight: 600;
+}
+
+.pastiglia input:focus-visible + .pastiglia-testo {
+    outline: 3px solid var(--freccia);
+    outline-offset: 2px;
+}
+
+.campo-sera {
+    width: 3.9rem;
+    border: 0;
+    border-bottom: 1px solid #C6CDD3;
+    background: transparent;
+    text-align: right;
+    font-size: .9rem;
+    color: var(--inchiostro);
+    font-variant-numeric: tabular-nums;
+    padding: .1rem 0;
+    margin-left: .25rem;
+    font-family: inherit;
+}
+.campo-sera:focus { outline: none; border-bottom-color: var(--freccia); }
+
+/* Richiamo d'azione: la sola cosa pienamente rossa */
+.azione-ricerca {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1.45rem;
+}
+
+.btn-freccia {
+    background: var(--freccia);
+    color: #fff;
+    border: 0;
+    border-radius: 999px;
+    padding: .78rem 1.9rem;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: background .15s ease;
+}
+.btn-freccia:hover, .btn-freccia:focus { background: var(--freccia-scuro); color: #fff; }
+.btn-freccia:disabled { opacity: .75; }
+
+.nota { color: var(--inchiostro-2); font-size: .85rem; }
 
 /* Spinner nel tasto mentre cerca */
 .cercando {
     display: none;
-    width: 1.1rem;
-    height: 1.1rem;
-    margin-right: .5rem;
-    vertical-align: -.25rem;
+    width: 1.05rem;
+    height: 1.05rem;
+    margin-right: .55rem;
+    vertical-align: -.22rem;
     border: 2px solid rgba(255, 255, 255, .4);
     border-top-color: #fff;
     border-radius: 50%;
@@ -92,10 +317,191 @@ a.navbar-brand:hover { color: #1C2430; }
 @keyframes gira { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) {
     .cercando { animation-duration: 1.6s; }
+    .btn-scambia { transition: none; }
 }
 
-/* Le pagine semplici (privacy, errore) */
-.pagina-semplice {
-    max-width: 46em;
-    margin-inline: auto;
+/* Avvisi: la carta quieta con la battitura rossa */
+.avviso {
+    background: var(--carta);
+    border: 1px solid var(--linea);
+    border-left: 3px solid var(--freccia);
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    margin-top: 1rem;
+    color: var(--inchiostro-2);
 }
+
+/* ---------------------------------------------------------------
+   Risultati: tabellone pulito, orari grandi, cifre allineate
+   --------------------------------------------------------------- */
+.risultati { margin-top: 2.3rem; }
+
+.risultati-testa { margin-bottom: .9rem; }
+
+.risultati-testa h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -.01em;
+    margin-bottom: .2rem;
+}
+
+.risultati-testa p { color: var(--inchiostro-2); font-size: .9rem; margin-bottom: 0; }
+
+.tabella-soluzioni {
+    background: var(--carta);
+    border: 1px solid var(--linea);
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.tabella-soluzioni table { margin-bottom: 0; }
+
+.tabella-soluzioni thead th {
+    font-size: .76rem;
+    font-weight: 600;
+    color: var(--inchiostro-2);
+    padding: .8rem 1.1rem;
+    border-bottom: 1px solid var(--linea);
+    background: #FAFBFC;
+    white-space: nowrap;
+}
+
+.tabella-soluzioni tbody td {
+    padding: .95rem 1.1rem;
+    border-top: 0;
+    border-bottom: 1px solid var(--linea);
+    vertical-align: middle;
+}
+
+.tabella-soluzioni tbody tr:last-child td { border-bottom: 0; }
+.tabella-soluzioni tbody tr:hover { background: #FAFBFC; }
+
+@media (max-width: 767.98px) {
+    /* su schermi piccoli la tabella diventa una lista di righe */
+    .tabella-soluzioni thead { display: none; }
+    .tabella-soluzioni table,
+    .tabella-soluzioni tbody { display: block; }
+    .tabella-soluzioni tbody tr {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: .75rem .6rem;
+        padding: .95rem .9rem;
+        border-bottom: 1px solid var(--linea);
+    }
+    .tabella-soluzioni tbody tr:last-child { border-bottom: 0; }
+    .tabella-soluzioni tbody td { display: block; padding: 0; border: 0; }
+    /* Durata e Treni lasciano il posto a orari e prezzo */
+    .tabella-soluzioni tbody td:nth-child(3),
+    .tabella-soluzioni tbody td:nth-child(4) { display: none; }
+    /* gli orari si dividono la riga, poi prezzo e dettaglio in fondo */
+    .tabella-soluzioni tbody td:nth-child(1),
+    .tabella-soluzioni tbody td:nth-child(2) { flex: 0 0 calc(50% - .3rem); }
+    .tabella-soluzioni tbody td:nth-child(5) { flex: 1 1 auto; }
+    .tabella-soluzioni tbody td:nth-child(6) { margin-left: auto; }
+}
+
+.ora-grande {
+    font-weight: 700;
+    font-size: 1.45rem;
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -.01em;
+}
+
+.ora-luogo { color: var(--inchiostro-2); font-size: .82rem; }
+
+.chip {
+    display: inline-block;
+    border: 1px solid var(--linea);
+    border-radius: 999px;
+    padding: .18rem .65rem;
+    margin: 0 .3rem .3rem 0;
+    font-size: .8rem;
+    font-weight: 500;
+    background: var(--carta);
+    color: var(--inchiostro);
+    white-space: nowrap;
+}
+
+.badge-super {
+    display: inline-block;
+    background: #E8F4EC;
+    color: var(--passaggio);
+    font-weight: 600;
+    font-size: .74rem;
+    padding: .26rem .6rem;
+    border-radius: 999px;
+    margin-left: .45rem;
+    white-space: nowrap;
+}
+
+.prezzo-grande {
+    font-weight: 800;
+    font-size: 1.2rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--freccia);
+    white-space: nowrap;
+}
+
+.prezzo-vuoto { color: var(--inchiostro-2); font-size: .88rem; }
+
+.btn-dettaglio {
+    border: 1px solid var(--linea);
+    border-radius: 999px;
+    padding: .32rem .95rem;
+    font-size: .85rem;
+    font-weight: 600;
+    color: var(--inchiostro);
+    background: var(--carta);
+    white-space: nowrap;
+    transition: border-color .15s ease, color .15s ease;
+}
+.btn-dettaglio:hover { border-color: var(--freccia); color: var(--freccia); }
+
+/* Modale: carta arrotondata, tabelle quieta */
+.modal-content { border: 0; border-radius: 16px; }
+.modal-header, .modal-footer { border-color: var(--linea); }
+.modal-footer .btn {
+    background: transparent;
+    border: 1px solid var(--linea);
+    border-radius: 999px;
+    color: var(--inchiostro);
+    font-family: inherit;
+    font-weight: 600;
+}
+.modal-footer .btn:hover { border-color: var(--freccia); color: var(--freccia); }
+.modal-body h6 {
+    font-size: .82rem;
+    font-weight: 700;
+    color: var(--inchiostro-2);
+    margin-bottom: .55rem;
+}
+.modal-body .table { margin-bottom: 0; font-size: .92rem; }
+.modal-body .table th { font-size: .76rem; color: var(--inchiostro-2); font-weight: 600; }
+
+/* Pagina semplice (privacy, errore) e piede */
+.pagina-semplice {
+    max-width: 62rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+    margin-top: 2.2rem;
+    font-size: .98rem;
+    color: var(--inchiostro-2);
+}
+.pagina-semplice h1 {
+    font-weight: 800;
+    font-size: 1.65rem;
+    letter-spacing: -.01em;
+    margin-bottom: .6rem;
+}
+
+.piede {
+    border-top: 1px solid var(--linea);
+    margin-top: 3.5rem;
+    padding: 1.4rem 0 2rem;
+    color: var(--inchiostro-2);
+    font-size: .85rem;
+}
+.piede .pagina:not(:last-child) { margin-bottom: .35rem; }
+.piede a { color: var(--inchiostro-2); }
